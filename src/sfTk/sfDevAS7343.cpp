@@ -584,6 +584,27 @@ bool sfDevAS7343::setAgain(sfe_as7343_again_t again)
     return true;
 }
 
+bool sfDevAS7343::setATime(uint8_t aTime)
+{
+    // Write ATIME (0x81), which is in Register Bank 0 (>= 0x80).
+    // readRegisterBank will handle the necessary bank switch.
+    if (ksfTkErrOk != _theBus->writeRegister(ksfAS7343RegATime, aTime))
+        return false;
+
+    return true;
+}
+
+bool sfDevAS7343::setAStep(uint16_t aStep)
+{
+    // Write ASTEP (0xD4), which is a 16-bit field written LSB/MSB using a 2-byte write.
+    // ASTEP is in Register Bank 0 (>= 0x80).
+    // Note: This relies on the library's I2C write function handling the LSB/MSB order correctly.
+    if (ksfTkErrOk != _theBus->writeRegister(ksfAS7343RegAStep, (uint8_t *)&aStep, 2))
+        return false;
+
+    return true;
+}
+
 bool sfDevAS7343::enableFlickerDetection(bool enable)
 {
     sfe_as7343_reg_enable_t enableReg; // Create a register structure for the Enable register

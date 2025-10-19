@@ -963,7 +963,7 @@ class sfDevAS7343
     /// @return True if successful, false if it fails.
     bool readRegisterBank(uint8_t reg, uint8_t &data);
 
-    /// Brief Set AGAIN value
+    /// @brief Set AGAIN value
     /// @details This method sets the AGAIN value by writing to the AGAIN bits in
     /// the CFG1 register (ksfAS7343RegCfg1).
     /// @param again The AGAIN value to set.
@@ -972,6 +972,18 @@ class sfDevAS7343
     /// AGAIN_32X, AGAIN_64X.
     /// @return True if successful, false if it fails.
     bool setAgain(sfe_as7343_again_t again);
+
+    /// @brief Sets the ATIME register (0x81).
+    /// @details Sets the number of integration steps (0 to 255).
+    /// @param aTime The value for ATIME (0-255).
+    /// @return True if successful, false otherwise.
+    bool setATime(uint8_t aTime);
+
+    /// @brief Sets the ASTEP registers (0xD4, 0xD5).
+    /// @details Sets the integration time step size (0 to 65534).
+    /// @param aStep The value for ASTEP (0-65534).
+    /// @return True if successful, false otherwise.
+    bool setAStep(uint16_t aStep);
 
     /// @brief Enable or Disable the Flicker Detection
     /// @details This method enables or disables the flicker detection by setting
